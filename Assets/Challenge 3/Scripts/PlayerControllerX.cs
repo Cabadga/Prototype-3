@@ -16,7 +16,9 @@ public class PlayerControllerX : MonoBehaviour
     private AudioSource playerAudio;
     public AudioClip moneySound;
     public AudioClip explodeSound;
-
+    public AudioClip boingSound;
+    public float yRange = 15;
+    public float yRange2 = 1.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +35,15 @@ public class PlayerControllerX : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (transform.position.y > yRange)
+        {
+            transform.position = new Vector3(transform.position.x, yRange, transform.position.z);
+        }
+        if (transform.position.y < yRange2)
+        {
+            playerRb.AddForce(Vector3.up * floatForce * 10, ForceMode.Impulse);
+            playerAudio.PlayOneShot(boingSound, 1.0f);
+        }
         // While space is pressed and player is low enough, float up
         if (Input.GetKey(KeyCode.Space) && !gameOver)
         {
